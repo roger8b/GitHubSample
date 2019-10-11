@@ -8,13 +8,13 @@ import br.com.rms.githubsample.base.CoroutineContextProvider
 import br.com.rms.githubsample.base.ScreenState
 import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.log.Logs
-import br.com.rms.githubsample.usecases.TopRepositoryUseCaseContract
+import br.com.rms.githubsample.usecases.SearchRepositoryUseCaseContract
 import kotlinx.coroutines.launch
 
 class SearchRepositoryViewModel(
 
     private val logs: Logs,
-    private val useCase: TopRepositoryUseCaseContract,
+    private val useCase: SearchRepositoryUseCaseContract,
     private val coroutineContextProvider: CoroutineContextProvider
 
 ) : ViewModel() {

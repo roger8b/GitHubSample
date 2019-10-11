@@ -7,15 +7,14 @@ import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.domain.SearchParameters
 import br.com.rms.githubsample.log.Logs
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 
-class TopRepositoryUseCase(
+class SearchRepositoryUseCase(
 
     private val repository: GitHubSearchRepositoryContract,
     private val logs: Logs
 
 ) :
-    TopRepositoryUseCaseContract, BaseUseCase<List<Repository>, SearchParameters>() {
+    SearchRepositoryUseCaseContract, BaseUseCase<List<Repository>, SearchParameters>() {
 
     override suspend fun getTopRepositoryList(
         query: String,

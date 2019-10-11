@@ -11,7 +11,7 @@ import br.com.rms.githubsample.base.CoroutineContextProvider
 import br.com.rms.githubsample.base.ScreenState
 import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.log.Logs
-import br.com.rms.githubsample.usecases.TopRepositoryUseCase
+import br.com.rms.githubsample.usecases.SearchRepositoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -32,7 +32,7 @@ class SearchRepositoryViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @Mock
-    lateinit var useCase: TopRepositoryUseCase
+    lateinit var useCase: SearchRepositoryUseCase
 
     @Mock
     lateinit var logs: Logs

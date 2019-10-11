@@ -5,15 +5,15 @@ import br.com.rms.githubsample.data.repository.GitHubSearchRepository
 import br.com.rms.githubsample.data.repository.GitHubSearchRepositoryContract
 import br.com.rms.githubsample.log.Logs
 import br.com.rms.githubsample.presentation.viewmodel.SearchRepositoryViewModel
-import br.com.rms.githubsample.usecases.TopRepositoryUseCase
-import br.com.rms.githubsample.usecases.TopRepositoryUseCaseContract
+import br.com.rms.githubsample.usecases.SearchRepositoryUseCase
+import br.com.rms.githubsample.usecases.SearchRepositoryUseCaseContract
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     single<GitHubSearchRepositoryContract> { GitHubSearchRepository() }
 
-    single<TopRepositoryUseCaseContract> { TopRepositoryUseCase(get(), get()) }
+    single<SearchRepositoryUseCaseContract> { SearchRepositoryUseCase(get(), get()) }
 
     single { Logs() }
 
