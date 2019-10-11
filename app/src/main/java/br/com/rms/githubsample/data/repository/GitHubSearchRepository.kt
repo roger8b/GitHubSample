@@ -1,29 +1,14 @@
-package br.com.rms.githubsample.home
+package br.com.rms.githubsample.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import br.com.rms.githubsample.base.ScreenState
-import br.com.rms.githubsample.log.Logs
+import br.com.rms.githubsample.domain.SearchParameters
 import br.com.rms.githubsample.domain.Repository
 
-class RepositoryListViewModel(
+class GitHubSearchRepository : GitHubSearchRepositoryContract {
 
-    val logs: Logs
-
-) : ViewModel() {
-
-    private val _state: MutableLiveData<ScreenState<RepositoryListState>> = MutableLiveData()
-
-    val state: LiveData<ScreenState<RepositoryListState>>
-        get() = _state
-
-    fun fetchRepositoryList() {
+    override fun search(params: SearchParameters): List<Repository> {
         val list = mutableListOf<Repository>()
-
         repeat((1..3).count()) {
             list.add(
-
                 Repository(
                     (it * 10).toString(),
                     "Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor.",
@@ -41,9 +26,8 @@ class RepositoryListViewModel(
                     ""
                 )
             )
-
-
         }
-        _state.value = ScreenState.Render(RepositoryListState.ShowResult(list))
+
+        return list
     }
 }
