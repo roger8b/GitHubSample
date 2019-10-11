@@ -1,11 +1,49 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="TextTitle" parent="TextAppearance.AppCompat">
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/roboto_black</item>
+    </style>
+
+    <style name="TextDescription" parent="TextAppearance.AppCompat">
+        <item name="android:gravity">center</item>
+        <item name="android:lines">3</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="TextCounter" parent="TextAppearance.AppCompat">
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="CardListItem" parent="CardView">
+        <item name="cardBackgroundColor">@color/cardListItemBackground</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">10dp</item>
+    </style>
+
+    <style name="Icons" parent="AppTheme">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
 </resources>

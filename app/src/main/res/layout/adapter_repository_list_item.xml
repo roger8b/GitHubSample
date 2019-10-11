@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardListItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_default">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintEnd_toEndOf="@id/imageGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor." />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/TextDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            app:layout_constraintBottom_toTopOf="@id/pullRequestIcon"
+            app:layout_constraintEnd_toEndOf="@id/imageGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Delegadis gente finis, bibendum egestas augue arcu ut est" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/pullRequestIcon"
+            style="@style/Icons"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:src="@drawable/git_pull_request"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/pullRequestCounter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
+        <TextView
+            android:id="@+id/pullRequestCounter"
+            style="@style/TextCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            app:layout_constraintBottom_toBottomOf="@id/pullRequestIcon"
+            app:layout_constraintEnd_toStartOf="@id/repositoryStarIcon"
+            app:layout_constraintStart_toEndOf="@id/pullRequestIcon"
+            app:layout_constraintTop_toTopOf="@id/pullRequestIcon"
+            tools:text="9999" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/repositoryStarIcon"
+            style="@style/Icons"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:src="@drawable/git_star"
+            app:layout_constraintBottom_toBottomOf="@id/pullRequestIcon"
+            app:layout_constraintEnd_toStartOf="@id/repositoryStarCounter"
+            app:layout_constraintStart_toEndOf="@id/pullRequestCounter"
+            app:layout_constraintTop_toTopOf="@id/pullRequestIcon" />
+
+        <TextView
+            android:id="@+id/repositoryStarCounter"
+            style="@style/TextCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_default"
+            app:layout_constraintBottom_toBottomOf="@id/pullRequestIcon"
+            app:layout_constraintStart_toEndOf="@id/repositoryStarIcon"
+            app:layout_constraintTop_toTopOf="@id/pullRequestIcon"
+            tools:text="9999" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/Icons"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/adapter_repository_list_item_icon"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:src="@drawable/github_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imageGuideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/imageGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
