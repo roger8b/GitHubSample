@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.rms.githubsample.R
 import br.com.rms.githubsample.base.BaseFragment
@@ -26,6 +25,8 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
         RepositoryListAdapter()
     }
 
+    private var page: Int = 1
+
     override fun onCreateView(
 
         inflater: LayoutInflater,
@@ -37,14 +38,17 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         logs.debug("FRAGMENT REPOSITORY LIST STARTED")
+
         viewModel.state.observe(::getLifecycle, ::updateUI)
+
         setupRecyclerView()
-        viewModel.fetchRepositoryList()
     }
 
     private fun updateUI(screenState: @ParameterName(name = "t") ScreenState<RepositoryListState>?) {
         when (screenState) {
+            is ScreenState.ShowLoading -> repositoryListAdapter.addLoading()
             is ScreenState.Render -> processRenderState(screenState.renderState)
         }
     }
@@ -55,7 +59,7 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
         }
     }
 
-    private fun updateRepositoryList(result: MutableList<Repository>) {
+    private fun updateRepositoryList(result: List<Repository>) {
         logs.debug("UPDATE REPOSITORY LIST $result")
         repositoryListAdapter.run {
             addItems(result)
@@ -68,7 +72,6 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
             .addItems(repositories)
             .setListener {
                 logs.debug("REPOSITORY ITEM HAS CLICKED")
-                repositoryListAdapter.addLoading()
             }
 
         val gridLayoutManager = GridLayoutManager(context, 1)
@@ -76,15 +79,14 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
             layoutManager = gridLayoutManager
             adapter = repositoryListAdapter
             setHasFixedSize(true)
-            itemAnimator = DefaultItemAnimator()
             addOnScrollListener(object : PaginationScrollListener(gridLayoutManager) {
                 override fun loadMoreItems() {
-
-                    viewModel.fetchRepositoryList()
-
+                    viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page++)
                 }
             })
         }
+
+        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
     }
 
     interface Listener {}
