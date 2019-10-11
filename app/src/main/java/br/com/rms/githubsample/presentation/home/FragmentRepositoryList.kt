@@ -1,4 +1,4 @@
-package br.com.rms.githubsample.home
+package br.com.rms.githubsample.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

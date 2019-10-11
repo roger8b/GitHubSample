@@ -1,4 +1,4 @@
-package br.com.rms.githubsample.home
+package br.com.rms.githubsample.presentation.home
 
 import br.com.rms.githubsample.R
 import br.com.rms.githubsample.base.BaseActivity
