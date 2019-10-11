@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 class SearchRepositoryViewModel(
 
     private val logs: Logs,
-    private val useCase: TopRepositoryUseCaseContract
+    private val useCase: TopRepositoryUseCaseContract,
+    private val coroutineContextProvider: CoroutineContextProvider
 
 ) : ViewModel() {
 
@@ -28,7 +29,9 @@ class SearchRepositoryViewModel(
         get() = _state
 
     fun fetchRepositoryList(query: String, sort: String, order: String, page: Int) {
-        viewModelScope.launch {
+
+        viewModelScope.launch(coroutineContextProvider.main) {
+
             _state.value = ScreenState.ShowLoading
             useCase.getTopRepositoryList(query, sort, order, page, this) {
                 this.fold(::handleFailure, ::handleSuccess)

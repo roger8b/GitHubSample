@@ -1,5 +1,6 @@
 package br.com.rms.githubsample.di
 
+import br.com.rms.githubsample.base.CoroutineContextProvider
 import br.com.rms.githubsample.data.repository.GitHubSearchRepository
 import br.com.rms.githubsample.data.repository.GitHubSearchRepositoryContract
 import br.com.rms.githubsample.log.Logs
@@ -11,18 +12,18 @@ import org.koin.dsl.module
 
 val appModule = module {
     single<GitHubSearchRepositoryContract> { GitHubSearchRepository() }
-    single<TopRepositoryUseCaseContract> {
-        TopRepositoryUseCase(
-            get(),
-            get()
-        )
-    }
+
+    single<TopRepositoryUseCaseContract> { TopRepositoryUseCase(get(), get()) }
+
     single { Logs() }
+
+    single { CoroutineContextProvider() }
 }
 
 val viewModel = module {
     viewModel {
         SearchRepositoryViewModel(
+            get(),
             get(),
             get()
         )
