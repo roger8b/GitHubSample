@@ -1,6 +1,6 @@
 package br.com.rms.githubsample
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import br.com.rms.githubsample.di.appModule
 import br.com.rms.githubsample.di.mNetworkModules
 import br.com.rms.githubsample.di.viewModel
@@ -9,7 +9,7 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-class App : Application() {
+class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
