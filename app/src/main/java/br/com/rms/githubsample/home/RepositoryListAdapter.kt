@@ -18,7 +18,12 @@ class RepositoryListAdapter :
     private var listener: (Repository.() -> Unit)? = null
 
     fun addLoading() {
-        if (!itemList.last().second) {
+        if (itemList.isEmpty()) {
+            itemList.run {
+                add(emptyRepository())
+                notifyItemInserted(lastIndex)
+            }
+        } else if (!itemList.last().second) {
             itemList.run {
                 add(lastIndex + 1, emptyRepository())
                 notifyItemInserted(lastIndex)
@@ -27,10 +32,11 @@ class RepositoryListAdapter :
     }
 
     private fun removeLoading() {
-        itemList.run {
-            if (lastIndex > 0) {
-                removeAt(lastIndex)
-                notifyItemRemoved(lastIndex)
+        itemList.map {
+            if (it.second) {
+                val indexOf = itemList.indexOf(it)
+                itemList.removeAt(indexOf)
+                notifyItemRemoved(indexOf)
             }
         }
     }
