@@ -35,10 +35,8 @@ class TopRepositoryUseCase(
     override suspend fun run(params: SearchParameters): Either<Throwable, List<Repository>> {
         return try {
             val list = repository.search(params)
-            delay(2000)
             Either.Right(list)
         } catch (e: Throwable) {
-            delay(2000)
             Either.Left(e)
         }
     }

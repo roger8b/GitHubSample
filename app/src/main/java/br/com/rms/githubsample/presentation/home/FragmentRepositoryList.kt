@@ -27,7 +27,7 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
         RepositoryListAdapter()
     }
 
-    private var page: Int = 1
+    private var page: Int = 0
 
     override fun onCreateView(
 
@@ -102,13 +102,13 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
             setHasFixedSize(true)
             addOnScrollListener(object : PaginationScrollListener(gridLayoutManager) {
                 override fun loadMoreItems() {
-                    if (page > 1)
+                    if (page >= 1)
                         viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page++)
                 }
             })
         }
 
-        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page++)
     }
 
     interface Listener {}
