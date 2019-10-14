@@ -25,18 +25,23 @@ class SearchRepositoryUseCase(
         onResult: Either<Throwable, List<Repository>>.() -> Unit
     ) {
         logs.debug("GET TOP REPOSITORY LIST HAS CALLED: \nQUERY: $query,\nSORT: $sort,\nORDER: $order, \nPAGE: $page")
-        invoke(
-            coroutineScope,
-            SearchParameters(query, sort, order, page), onResult
-        )
+        invoke(coroutineScope, SearchParameters(query, sort, order, page), onResult)
     }
+
 
     override suspend fun run(params: SearchParameters): Either<Throwable, List<Repository>> {
         return try {
-            val list = repository.search(params)
+
+            val list = repository.search(checkParameters(params))
             Either.Right(list)
         } catch (e: Throwable) {
             Either.Left(e)
         }
+    }
+
+    private fun checkParameters(params: SearchParameters): SearchParameters = params.apply {
+        if(query.isEmpty()) throw Throwable("Query parameter is Empty")
+        if(sort.isEmpty()) throw Throwable("Sort parameter is Empty")
+        if(order.isEmpty()) throw Throwable("Query parameter is Empty")
     }
 }
