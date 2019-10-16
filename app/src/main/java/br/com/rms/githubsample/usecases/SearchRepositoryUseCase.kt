@@ -34,7 +34,11 @@ class SearchRepositoryUseCase(
 
     override suspend fun run(params: SearchParameters): Either<Throwable, List<Repository>> {
         return withContext(coroutineContextProvider.io) {
-            repository.search(checkParameters(params))
+            try {
+                Either.Right(repository.search(checkParameters(params)))
+            } catch (e: Throwable) {
+                Either.Left(e)
+            }
         }
     }
 

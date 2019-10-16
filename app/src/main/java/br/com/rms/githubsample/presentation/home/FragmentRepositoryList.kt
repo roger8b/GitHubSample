@@ -63,11 +63,12 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
     }
 
     private fun updateRepositoryList(result: List<Repository>) {
-        logs.debug("UPDATE REPOSITORY LIST $result")
+        logs.debug("UPDATE REPOSITORY LIST ADD NEW ${result.size} ITENS")
         repositoryListAdapter.run {
             addItems(result)
             notifyDataSetChanged()
         }
+        page++
     }
 
     private fun showErrorMessage() {
@@ -89,6 +90,7 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
     }
 
     private fun setupRecyclerView() {
+        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
         repositoryListAdapter
             .addItems(repositories)
             .setListener {
@@ -102,14 +104,14 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
             setHasFixedSize(true)
             addOnScrollListener(object : PaginationScrollListener(gridLayoutManager) {
                 override fun loadMoreItems() {
-                    if (page >= 1)
-                        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page++)
+                    if(page != 0)
+                    viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
                 }
             })
         }
 
-        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page++)
+
     }
 
-    interface Listener {}
+    interface Listener
 }
