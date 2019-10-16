@@ -1,18 +1,19 @@
 package br.com.rms.githubsample.data.mapper
 
 import br.com.rms.githubsample.*
-import br.com.rms.githubsample.data.model.GitHubElement
+import br.com.rms.githubsample.data.model.GitHubRepository
 import br.com.rms.githubsample.data.model.Owner
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations.initMocks
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class RepositoryMapperTest {
 
     @Mock
-    lateinit var gitHubElement: GitHubElement
+    lateinit var gitHubRepository: GitHubRepository
 
     @Mock
     lateinit var owner: Owner
@@ -25,117 +26,114 @@ class RepositoryMapperTest {
 
         mapper = RepositoryMapper()
 
-        whenever(gitHubElement.id).thenReturn(id)
-        whenever(gitHubElement.name).thenReturn(name)
-        whenever(gitHubElement.description).thenReturn(description)
-        whenever(gitHubElement.forksCount).thenReturn(forksCount)
-        whenever(gitHubElement.stargazersCount).thenReturn(stargazersCount)
-        whenever(gitHubElement.owner).thenReturn(owner)
-        whenever(gitHubElement.owner?.avatarURL).thenReturn(avatarURL)
+        whenever(gitHubRepository.id).thenReturn(id)
+        whenever(gitHubRepository.name).thenReturn(name)
+        whenever(gitHubRepository.description).thenReturn(description)
+        whenever(gitHubRepository.forksCount).thenReturn(forksCount)
+        whenever(gitHubRepository.stargazersCount).thenReturn(stargazersCount)
+        whenever(gitHubRepository.owner).thenReturn(owner)
+        whenever(gitHubRepository.owner?.avatarURL).thenReturn(avatarURL)
     }
 
     @Test
     fun `When all GitHubElement fields are valid the function should return an object of type Repository`() {
 
-        val mapperResponse = mapper.map(gitHubElement)
+        val mapperResponse = mapper.map(gitHubRepository)
 
-        mapperResponse.map { repository ->
-            assertEquals(id, repository.id)
-            assertEquals(name, repository.name)
-            assertEquals(description, repository.description)
-            assertEquals(forksCount, repository.forksCount)
-            assertEquals(stargazersCount, repository.stargazersCount)
-            assertEquals(avatarURL, repository.avatarURL)
+        assertEquals(id, mapperResponse.id)
+        assertEquals(name, mapperResponse.name)
+        assertEquals(description, mapperResponse.description)
+        assertEquals(forksCount, mapperResponse.forksCount)
+        assertEquals(stargazersCount, mapperResponse.stargazersCount)
+        assertEquals(avatarURL, mapperResponse.avatarURL)
+    }
+
+    @Test
+    fun `When Id is null, the should return an exception`() {
+        whenever(gitHubRepository.id).thenReturn(null)
+
+        assertFailsWith(Throwable::class, "Error repository Id is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When Id is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.id).thenReturn(null)
-
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Id is null", error.message)
+    fun `When the name is null, the should return an exception`() {
+        whenever(gitHubRepository.name).thenReturn(null)
+        assertFailsWith(Throwable::class, "Error repository Name is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the name is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.name).thenReturn(null)
+    fun `When the name is empty, the should return an exception`() {
+        whenever(gitHubRepository.name).thenReturn("")
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Name is null", error.message)
+        assertFailsWith(Throwable::class, "Error repository Name is Empty") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the name is empty, the Either Left should return an exception`() {
-        whenever(gitHubElement.name).thenReturn("")
+    fun `When the description is null, the should return an exception`() {
+        whenever(gitHubRepository.description).thenReturn(null)
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Name is Empty", error.message)
+        assertFailsWith(Throwable::class, "Error repository Description is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the description is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.description).thenReturn(null)
+    fun `When the description is empty, the should return an exception`() {
+        whenever(gitHubRepository.description).thenReturn("")
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Description is null", error.message)
+        assertFailsWith(Throwable::class, "Error repository Description is Empty") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the description is empty, the Either Left should return an exception`() {
-        whenever(gitHubElement.description).thenReturn("")
+    fun `When the forksCount is null, the should return an exception`() {
+        whenever(gitHubRepository.forksCount).thenReturn(null)
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Description is Empty", error.message)
+        assertFailsWith(Throwable::class, "Error repository Forks Count is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the forksCount is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.forksCount).thenReturn(null)
+    fun `When the stargazersCount is null, the should return an exception`() {
+        whenever(gitHubRepository.stargazersCount).thenReturn(null)
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Forks Count is null", error.message)
+        assertFailsWith(Throwable::class, "Error repository Stargazers Count is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the stargazersCount is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.stargazersCount).thenReturn(null)
+    fun `When the owner is null, the should return an exception`() {
+        whenever(gitHubRepository.owner).thenReturn(null)
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Stargazers Count is null", error.message)
+        assertFailsWith(Throwable::class, "Error repository Owner is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the owner is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.owner).thenReturn(null)
+    fun `When the avatarURL is null, the should return an exception`() {
+        whenever(gitHubRepository.owner?.avatarURL).thenReturn(null)
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Owner is null", error.message)
+        assertFailsWith(Throwable::class, "Error repository Avatar URL is null") {
+            mapper.map(gitHubRepository)
         }
     }
 
     @Test
-    fun `When the avatarURL is null, the Either Left should return an exception`() {
-        whenever(gitHubElement.owner?.avatarURL).thenReturn(null)
+    fun `When the avatarURL is empty, the should return an exception`() {
+        whenever(gitHubRepository.owner?.avatarURL).thenReturn("")
 
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Avatar URL is null", error.message)
-        }
-    }
-
-    @Test
-    fun `When the avatarURL is empty, the Either Left should return an exception`() {
-        whenever(gitHubElement.owner?.avatarURL).thenReturn("")
-
-        mapper.map(gitHubElement).mapLeft { error ->
-            assertEquals("Error element Avatar URL is Empty", error.message)
+        assertFailsWith(Throwable::class, "Error repository Avatar URL is Empty") {
+            mapper.map(gitHubRepository)
         }
     }
 }

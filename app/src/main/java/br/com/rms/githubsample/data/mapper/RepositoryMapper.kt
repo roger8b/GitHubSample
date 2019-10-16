@@ -1,46 +1,35 @@
 package br.com.rms.githubsample.data.mapper
 
-import arrow.core.Either
 import br.com.rms.githubsample.base.BaseMapper
-import br.com.rms.githubsample.data.model.GitHubElement
+import br.com.rms.githubsample.data.model.GitHubRepository
 import br.com.rms.githubsample.domain.Repository
 
-class RepositoryMapper : BaseMapper<GitHubElement, Repository>() {
+class RepositoryMapper : BaseMapper<GitHubRepository, Repository>() {
 
-    override fun map(element: GitHubElement): Either<Throwable, Repository> {
-        if (element.id == null) return Either.Left(Throwable("Error element Id is null"))
-        val id = element.id
+    override fun map(repository: GitHubRepository): Repository {
+        if (repository.id == null) throw Throwable("Error repository Id is null")
+        val id = repository.id
 
-        if (element.name == null) return Either.Left(Throwable("Error element Name is null"))
-        if (element.name.isEmpty()) return Either.Left(Throwable("Error element Name is Empty"))
-        val name = element.name
+        if (repository.name == null) throw Throwable("Error repository Name is null")
+        if (repository.name.isEmpty()) throw Throwable("Error repository Name is Empty")
+        val name = repository.name
 
-        if (element.description == null) return Either.Left(Throwable("Error element Description is null"))
-        if (element.description.isEmpty()) return Either.Left(Throwable("Error element Description is Empty"))
-        val description = element.description
+        if (repository.description == null) throw Throwable("Error repository Description is null")
+        if (repository.description.isEmpty()) throw Throwable("Error repository Description is Empty")
+        val description = repository.description
 
-        if (element.forksCount == null) return Either.Left(Throwable("Error element Forks Count is null"))
-        val forksCount = element.forksCount
+        if (repository.forksCount == null) throw Throwable("Error repository Forks Count is null")
+        val forksCount = repository.forksCount
 
-        if (element.stargazersCount == null) return Either.Left(Throwable("Error element Stargazers Count is null"))
-        val stargazersCount = element.stargazersCount
+        if (repository.stargazersCount == null) throw Throwable("Error repository Stargazers Count is null")
+        val stargazersCount = repository.stargazersCount
 
-        if (element.owner == null) return Either.Left(Throwable("Error element Owner is null"))
-        if (element.owner.avatarURL == null) return Either.Left(Throwable("Error element Avatar URL is null"))
-        if (element.description.isEmpty()) return Either.Left(Throwable("Error element Avatar URL is Empty"))
-        val avatarURL = element.owner.avatarURL
+        if (repository.owner == null) throw Throwable("Error repository Owner is null")
+        if (repository.owner.avatarURL == null) throw Throwable("Error repository Avatar URL is null")
+        if (repository.owner.avatarURL.isEmpty()) throw Throwable("Error repository Avatar URL is Empty")
+        val avatarURL = repository.owner.avatarURL
 
-        return Either.Right(
-            Repository(
-                id,
-                name,
-                description,
-                forksCount,
-                stargazersCount,
-                avatarURL
-            )
-        )
-
+        return Repository(id, name, description, forksCount, stargazersCount, avatarURL)
     }
 
 }
