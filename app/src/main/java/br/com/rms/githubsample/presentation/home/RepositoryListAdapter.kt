@@ -41,7 +41,7 @@ class RepositoryListAdapter :
         }
     }
 
-    private fun emptyRepository() = Pair(Repository("", "", "", 0, 0, ""), true)
+    private fun emptyRepository() = Pair(Repository(0, "", "", 0, 0, ""), true)
 
 
     fun addItems(list: List<Repository>) = apply {
@@ -79,10 +79,10 @@ class RepositoryListAdapter :
             with(itemView) {
                 val repository = pair.first
 
-                title.text = repository.title
+                title.text = repository.name
                 description.text = repository.description
-                pullRequestCounter.text = repository.pullRequestCounter.toString()
-                repositoryStarCounter.text = repository.starCounter.toString()
+                pullRequestCounter.text = repository.forksCount.toString()
+                repositoryStarCounter.text = repository.stargazersCount.toString()
 
                 if (listener != null) setOnClickListener { listener(repository) }
             }

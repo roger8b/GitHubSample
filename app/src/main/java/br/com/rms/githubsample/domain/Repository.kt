@@ -2,11 +2,11 @@ package br.com.rms.githubsample.domain
 
 data class Repository(
 
-    val id: String,
-    val title: String,
+    val id: Long,
+    val name: String,
     val description: String,
-    val pullRequestCounter: Int,
-    val starCounter: Int,
-    val avatarUrl: String
+    val forksCount: Long,
+    val stargazersCount: Long,
+    val avatarURL: String
 
 )
