@@ -31,7 +31,7 @@ class RepositoryListAdapter :
         }
     }
 
-    private fun removeLoading() {
+     fun removeLoading() {
         itemList.map {
             if (it.second) {
                 val indexOf = itemList.indexOf(it)
@@ -45,7 +45,6 @@ class RepositoryListAdapter :
 
 
     fun addItems(list: List<Repository>) = apply {
-        removeLoading()
         list.map {
             itemList.add(Pair(it, false))
         }

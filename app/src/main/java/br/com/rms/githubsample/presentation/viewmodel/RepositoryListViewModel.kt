@@ -11,7 +11,7 @@ import br.com.rms.githubsample.log.Logs
 import br.com.rms.githubsample.usecases.SearchRepositoryUseCaseContract
 import kotlinx.coroutines.launch
 
-class SearchRepositoryViewModel(
+class RepositoryListViewModel(
 
     private val logs: Logs,
     private val useCase: SearchRepositoryUseCaseContract,
@@ -20,7 +20,7 @@ class SearchRepositoryViewModel(
 ) : ViewModel() {
 
     sealed class State {
-        class ShowResult(val result: List<Repository>) : State()
+        class UpdateRepositoryList(val result: List<Repository>) : State()
         object ShowError : State()
     }
 
@@ -30,9 +30,7 @@ class SearchRepositoryViewModel(
         get() = _state
 
     fun fetchRepositoryList(query: String, sort: String, order: String, page: Int) {
-
         viewModelScope.launch(coroutineContextProvider.main) {
-
             _state.value = ScreenState.ShowLoading
             useCase.getTopRepositoryList(query, sort, order, page, this) {
                 this.fold(::handleFailure, ::handleSuccess)
@@ -41,11 +39,8 @@ class SearchRepositoryViewModel(
     }
 
     private fun handleSuccess(list: List<Repository>) {
-        _state.value = ScreenState.Render(
-            State.ShowResult(
-                list
-            )
-        )
+        _state.value = ScreenState.HideLoading
+        _state.value = ScreenState.Render(State.UpdateRepositoryList(list))
     }
 
     private fun handleFailure(throwable: Throwable) {

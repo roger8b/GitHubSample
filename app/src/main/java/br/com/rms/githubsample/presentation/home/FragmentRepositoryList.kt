@@ -5,19 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.rms.githubsample.R
 import br.com.rms.githubsample.base.BaseFragment
-import br.com.rms.githubsample.base.PaginationScrollListener
+import br.com.rms.githubsample.base.EndlessRecyclerViewScrollListener
 import br.com.rms.githubsample.base.ScreenState
 import br.com.rms.githubsample.domain.Repository
-import br.com.rms.githubsample.presentation.viewmodel.SearchRepositoryViewModel
+import br.com.rms.githubsample.presentation.viewmodel.RepositoryListViewModel
 import kotlinx.android.synthetic.main.fragment_repository_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
-    private val viewModel: SearchRepositoryViewModel by viewModel()
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
+
+    private var layoutManager: LinearLayoutManager? = null
+
+    private val listViewModel: RepositoryListViewModel by viewModel()
+
 
     private val repositories: List<Repository> by lazy {
         listOf<Repository>()
@@ -43,22 +49,33 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
         logs.debug("FRAGMENT REPOSITORY LIST STARTED")
 
-        viewModel.state.observe(::getLifecycle, ::updateUI)
+        listViewModel.state.observe(::getLifecycle, ::updateUI)
 
         setupRecyclerView()
     }
 
-    private fun updateUI(screenState: @ParameterName(name = "t") ScreenState<SearchRepositoryViewModel.State>?) {
+    private fun updateUI(screenState: @ParameterName(name = "t") ScreenState<RepositoryListViewModel.State>?) {
         when (screenState) {
-            is ScreenState.ShowLoading -> repositoryListAdapter.addLoading()
+            is ScreenState.ShowLoading -> showLoading()
+            is ScreenState.HideLoading -> hideLoading()
             is ScreenState.Render -> processRenderState(screenState.renderState)
         }
     }
 
-    private fun processRenderState(renderState: SearchRepositoryViewModel.State) {
+    private fun showLoading() {
+        repositoryListAdapter.addLoading()
+        scrollListener?.onLoading()
+    }
+
+    private fun hideLoading() {
+        repositoryListAdapter.removeLoading()
+        scrollListener?.hideLoading()
+    }
+
+    private fun processRenderState(renderState: RepositoryListViewModel.State) {
         when (renderState) {
-            is SearchRepositoryViewModel.State.ShowResult -> updateRepositoryList(renderState.result)
-            is SearchRepositoryViewModel.State.ShowError -> showErrorMessage()
+            is RepositoryListViewModel.State.UpdateRepositoryList -> updateRepositoryList(renderState.result)
+            is RepositoryListViewModel.State.ShowError -> showErrorMessage()
         }
     }
 
@@ -68,7 +85,6 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
             addItems(result)
             notifyDataSetChanged()
         }
-        page++
     }
 
     private fun showErrorMessage() {
@@ -76,7 +92,7 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
         dialog.setMessage(getString(R.string.alert_dialog_error_message))
             .setPositiveButton(getString(R.string.alert_dialog_error_button_yes)) { _, _ ->
 
-                viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+                listViewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
 
             }
             .setNegativeButton(getString(R.string.alert_dialog_error_button_not)) { _, _ ->
@@ -90,28 +106,37 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
     }
 
     private fun setupRecyclerView() {
-        viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+        layoutManager = LinearLayoutManager(context)
+
+        repositoryList.layoutManager = layoutManager
+        repositoryList.adapter = repositoryListAdapter
+        repositoryList.setHasFixedSize(true)
+
         repositoryListAdapter
             .addItems(repositories)
-            .setListener {
-                logs.debug("REPOSITORY ITEM HAS CLICKED")
-            }
+            .setListener { logs.debug("REPOSITORY ITEM HAS CLICKED") }
 
-        val gridLayoutManager = GridLayoutManager(context, 1)
-        repositoryList.run {
-            layoutManager = gridLayoutManager
-            adapter = repositoryListAdapter
-            setHasFixedSize(true)
-            addOnScrollListener(object : PaginationScrollListener(gridLayoutManager) {
-                override fun loadMoreItems() {
-                    if(page != 0)
-                    viewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
-                }
-            })
+        scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager!!) {
+
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+
+                this@FragmentRepositoryList.page = page
+
+                logs.debug("RECYCLER VIEW ON SCROLL LISTENER LOAD MORE: PAGE: $page TOTAL ITENS COUNT: $totalItemsCount ")
+
+                listViewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+            }
         }
 
+        repositoryList.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
 
+
+
+        if (repositoryListAdapter.itemCount == 0) {
+            listViewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+        }
     }
+
 
     interface Listener
 }

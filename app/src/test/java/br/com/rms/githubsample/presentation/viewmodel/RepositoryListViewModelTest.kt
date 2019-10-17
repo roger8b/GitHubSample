@@ -26,7 +26,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
-class SearchRepositoryViewModelTest {
+class RepositoryListViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -39,7 +39,7 @@ class SearchRepositoryViewModelTest {
 
 
     @Mock
-    lateinit var observer: Observer<ScreenState<SearchRepositoryViewModel.State>>
+    lateinit var observer: Observer<ScreenState<RepositoryListViewModel.State>>
 
     @Mock
     lateinit var coroutineContextProvider: CoroutineContextProvider
@@ -48,15 +48,15 @@ class SearchRepositoryViewModelTest {
     lateinit var lifecycleOwner: LifecycleOwner
     lateinit var lifecycle: Lifecycle
 
-    lateinit var viewModel: SearchRepositoryViewModel
+    lateinit var listViewModel: RepositoryListViewModel
 
 
     @Before
     fun setup() {
         initMocks(this)
-        viewModel = SearchRepositoryViewModel(logs, useCase, coroutineContextProvider)
+        listViewModel = RepositoryListViewModel(logs, useCase, coroutineContextProvider)
         lifecycle = LifecycleRegistry(lifecycleOwner)
-        viewModel.state.observeForever(observer)
+        listViewModel.state.observeForever(observer)
 
         whenever(coroutineContextProvider.io).thenReturn(Dispatchers.Unconfined)
         whenever(coroutineContextProvider.main).thenReturn(Dispatchers.Unconfined)
@@ -79,12 +79,9 @@ class SearchRepositoryViewModelTest {
                 function(Either.Right(validRepositoryList))
             }
 
-            viewModel.fetchRepositoryList(query, sort, order, page)
+            listViewModel.fetchRepositoryList(query, sort, order, page)
 
-            assertEquals(
-                (((viewModel.state.value as (ScreenState.Render)).renderState)
-                        as SearchRepositoryViewModel.State.ShowResult).result, validRepositoryList
-            )
+            assertEquals((((listViewModel.state.value as (ScreenState.Render)).renderState) as RepositoryListViewModel.State.UpdateRepositoryList).result, validRepositoryList)
         }
     }
 
@@ -105,11 +102,11 @@ class SearchRepositoryViewModelTest {
                 function(Either.Left(Throwable()))
             }
 
-            viewModel.fetchRepositoryList(query, sort, order, page)
+            listViewModel.fetchRepositoryList(query, sort, order, page)
 
             assertTrue {
-                val render = viewModel.state.value as ScreenState.Render
-                render.renderState is SearchRepositoryViewModel.State.ShowError
+                val render = listViewModel.state.value as ScreenState.Render
+                render.renderState is RepositoryListViewModel.State.ShowError
             }
         }
     }
