@@ -1,6 +1,7 @@
 package br.com.rms.githubsample.usecases
 
 import br.com.rms.githubsample.*
+import br.com.rms.githubsample.base.CoroutineContextProvider
 import br.com.rms.githubsample.data.repository.GitHubSearchRepository
 import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.log.Logs
@@ -21,17 +22,25 @@ class SearchRepositoryUseCaseTest {
     lateinit var logs: Logs
 
     @Mock
+    lateinit var coroutineContextProvider: CoroutineContextProvider
+
+    @Mock
     lateinit var repository: GitHubSearchRepository
 
-    lateinit var useCase: SearchRepositoryUseCase
+
+    lateinit var useCase: SearchRepositoryUseCaseContract
 
     lateinit var coroutineScope: CoroutineScope
 
     @Before
     fun setup() {
         initMocks(this)
-        useCase = SearchRepositoryUseCase(repository, logs)
         coroutineScope = CoroutineScope(Dispatchers.Unconfined)
+        useCase = SearchRepositoryUseCase(repository, coroutineContextProvider, logs)
+
+        whenever(coroutineContextProvider.io).thenReturn(Dispatchers.Unconfined)
+        whenever(coroutineContextProvider.main).thenReturn(Dispatchers.Unconfined)
+
     }
 
     @Test

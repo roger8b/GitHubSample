@@ -42,7 +42,6 @@ class SearchRepositoryUseCase(
         }
     }
 
-
     private fun checkParameters(params: SearchParameters): SearchParameters = params.apply {
         if (query.isEmpty()) throw Throwable("Query parameter is Empty")
         if (sort.isEmpty()) throw Throwable("Sort parameter is Empty")
