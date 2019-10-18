@@ -1,7 +1,6 @@
 package br.com.rms.githubsample.base
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import br.com.rms.githubsample.log.Logs
 import org.koin.android.ext.android.inject
@@ -20,11 +19,4 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun getContentView(): Int
 
-    fun setVisibilityVisible(view: View) {
-        view.visibility = View.VISIBLE
-    }
-
-    fun setVisibilityGone(view: View) {
-        view.visibility = View.GONE
-    }
 }

@@ -18,7 +18,7 @@ class RepositoryMapperTest {
     @Mock
     lateinit var owner: Owner
 
-    lateinit var mapper: RepositoryMapper
+    private lateinit var mapper: RepositoryMapper
 
     @Before
     fun setup() {

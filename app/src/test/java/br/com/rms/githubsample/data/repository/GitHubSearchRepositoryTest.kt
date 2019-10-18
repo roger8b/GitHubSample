@@ -48,7 +48,7 @@ class GitHubSearchRepositoryTest {
     @Mock
     lateinit var searchParameters: SearchParameters
 
-    lateinit var repository: GitHubSearchRepository
+    private lateinit var repository: GitHubSearchRepository
 
     @Before
     fun setup() {

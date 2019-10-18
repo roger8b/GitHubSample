@@ -9,7 +9,7 @@ abstract class BaseFragment<T> : Fragment() {
 
     val logs: Logs by inject()
 
-    var listener: T? = null
+    private var listener: T? = null
 
     override fun onDetach() {
         super.onDetach()

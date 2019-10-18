@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">GitHubSampleApp</string>
-    <string name="adapter_repository_louder_text_placeholder">Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor.</string>
-    <string name="adapter_repository_louder_number_placeholder">9999</string>
     <string name="alert_dialog_error_message">Ocorreu um erro ao executar a sua consulta gostaria de tentar novamente?</string>
     <string name="alert_dialog_error_button_yes">Sim</string>
     <string name="alert_dialog_error_button_not">Não</string>

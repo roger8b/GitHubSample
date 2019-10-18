@@ -27,9 +27,9 @@ class SearchRepositoryUseCaseTest {
     lateinit var repository: GitHubSearchRepository
 
 
-    lateinit var useCase: SearchRepositoryUseCaseContract
+    private lateinit var useCase: SearchRepositoryUseCaseContract
 
-    lateinit var coroutineScope: CoroutineScope
+    private lateinit var coroutineScope: CoroutineScope
 
     @Before
     fun setup() {

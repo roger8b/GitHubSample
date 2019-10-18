@@ -46,9 +46,9 @@ class RepositoryListViewModelTest {
 
     @Mock
     lateinit var lifecycleOwner: LifecycleOwner
-    lateinit var lifecycle: Lifecycle
+    private lateinit var lifecycle: Lifecycle
 
-    lateinit var listViewModel: RepositoryListViewModel
+    private lateinit var listViewModel: RepositoryListViewModel
 
 
     @Before
