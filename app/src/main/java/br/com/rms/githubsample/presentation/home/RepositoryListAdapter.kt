@@ -7,6 +7,7 @@ import br.com.rms.githubsample.R
 import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.ext.inflate
 import kotlinx.android.synthetic.main.adapter_repository_list_item.view.*
+import java.lang.IllegalArgumentException
 
 class RepositoryListAdapter :
     RecyclerView.Adapter<RepositoryListAdapter.BaseViewHolder>() {
@@ -61,7 +62,7 @@ class RepositoryListAdapter :
         when (viewType) {
             VIEW_TYPE_NORMAL -> ViewHolder(parent.inflate(R.layout.adapter_repository_list_item))
             VIEW_TYPE_LOADING -> ViewHolderLoading(parent.inflate(R.layout.adapter_repository_list_louder))
-            else -> throw IllegalAccessException("View Type not Implemented")
+            else -> throw IllegalArgumentException("View Type not Implemented")
         }
 
 
