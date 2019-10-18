@@ -7,7 +7,7 @@ import br.com.rms.githubsample.data.repository.GitHubSearchRepository
 import br.com.rms.githubsample.data.repository.GitHubSearchRepositoryContract
 import br.com.rms.githubsample.data.remote.createNetworkClient
 import br.com.rms.githubsample.log.Logs
-import br.com.rms.githubsample.presentation.viewmodel.SearchRepositoryViewModel
+import br.com.rms.githubsample.presentation.viewmodel.RepositoryListViewModel
 import br.com.rms.githubsample.usecases.SearchRepositoryUseCase
 import br.com.rms.githubsample.usecases.SearchRepositoryUseCaseContract
 import org.koin.android.viewmodel.dsl.viewModel
@@ -29,7 +29,7 @@ val appModule = module {
 
 val viewModel = module {
     viewModel {
-        SearchRepositoryViewModel(
+        RepositoryListViewModel(
             get(),
             get(),
             get()
