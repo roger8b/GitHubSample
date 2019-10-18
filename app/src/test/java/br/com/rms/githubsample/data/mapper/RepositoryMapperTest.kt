@@ -78,18 +78,18 @@ class RepositoryMapperTest {
     fun `When the description is null, the should return an exception`() {
         whenever(gitHubRepository.description).thenReturn(null)
 
-        assertFailsWith(Throwable::class, "Error repository Description is null") {
-            mapper.map(gitHubRepository)
-        }
+        val repository = mapper.map(gitHubRepository)
+
+        assertEquals("", repository.description)
     }
 
     @Test
     fun `When the description is empty, the should return an exception`() {
         whenever(gitHubRepository.description).thenReturn("")
 
-        assertFailsWith(Throwable::class, "Error repository Description is Empty") {
-            mapper.map(gitHubRepository)
-        }
+        val repository = mapper.map(gitHubRepository)
+
+        assertEquals("", repository.description)
     }
 
     @Test
