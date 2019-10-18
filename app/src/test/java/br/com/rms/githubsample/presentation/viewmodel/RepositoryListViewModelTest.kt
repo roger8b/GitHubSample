@@ -81,7 +81,10 @@ class RepositoryListViewModelTest {
 
             listViewModel.fetchRepositoryList(query, sort, order, page)
 
-            assertEquals((((listViewModel.state.value as (ScreenState.Render)).renderState) as RepositoryListViewModel.State.UpdateRepositoryList).result, validRepositoryList)
+            assertEquals(
+                (((listViewModel.state.value as (ScreenState.Render)).renderState) as RepositoryListViewModel.State.UpdateRepositoryList).result,
+                validRepositoryList
+            )
         }
     }
 

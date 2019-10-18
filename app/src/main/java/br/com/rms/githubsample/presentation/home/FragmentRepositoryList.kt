@@ -74,7 +74,9 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
     private fun processRenderState(renderState: RepositoryListViewModel.State) {
         when (renderState) {
-            is RepositoryListViewModel.State.UpdateRepositoryList -> updateRepositoryList(renderState.result)
+            is RepositoryListViewModel.State.UpdateRepositoryList -> updateRepositoryList(
+                renderState.result
+            )
             is RepositoryListViewModel.State.ShowError -> showErrorMessage()
         }
     }

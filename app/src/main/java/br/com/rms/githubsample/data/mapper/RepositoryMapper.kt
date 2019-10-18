@@ -14,7 +14,8 @@ class RepositoryMapper : BaseMapper<GitHubRepository, Repository>() {
         if (element.name.isEmpty()) throw Throwable("Error repository Name is Empty")
         val name = element.name
 
-        val description: String = if (element.description.isNullOrEmpty()) "" else element.description
+        val description: String =
+            if (element.description.isNullOrEmpty()) "" else element.description
 
         if (element.forksCount == null) throw Throwable("Error repository Forks Count is null")
         val forksCount = element.forksCount

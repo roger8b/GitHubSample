@@ -10,5 +10,5 @@
         android:id="@+id/fragmentRepositoryList"
         android:name="br.com.rms.githubsample.presentation.home.FragmentRepositoryList"
         android:label="FragmentRepositoryList"
-        tools:layout="@layout/fragment_repository_list"/>
+        tools:layout="@layout/fragment_repository_list" />
 </navigation>

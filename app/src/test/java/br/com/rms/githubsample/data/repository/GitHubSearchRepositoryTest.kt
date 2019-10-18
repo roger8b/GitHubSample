@@ -75,7 +75,11 @@ class GitHubSearchRepositoryTest {
     fun `When all parameters are correct and the service call is successful, you should return a list of repositories`() {
         runBlocking(Dispatchers.Unconfined) {
 
-            whenever(service.searchRepository(anyOfType())).thenReturn(Response.success(gitHubSearchResult))
+            whenever(service.searchRepository(anyOfType())).thenReturn(
+                Response.success(
+                    gitHubSearchResult
+                )
+            )
 
             whenever(mapper.map(anyOfType())).thenReturn(validRepository)
 
@@ -95,7 +99,7 @@ class GitHubSearchRepositoryTest {
         runBlocking(Dispatchers.Unconfined) {
             whenever(service.searchRepository(anyOfType())).thenReturn(Response.success(null))
 
-            assertFailsWith(NoSuchElementException::class, "Response Body is Null"){
+            assertFailsWith(NoSuchElementException::class, "Response Body is Null") {
                 repository.search(searchParameters)
             }
         }
@@ -104,11 +108,15 @@ class GitHubSearchRepositoryTest {
     @Test
     fun `When the service call returns success and the repository list is nulla should return an exception`() {
         runBlocking(Dispatchers.Unconfined) {
-            whenever(service.searchRepository(anyOfType())).thenReturn(Response.success(gitHubSearchResult))
+            whenever(service.searchRepository(anyOfType())).thenReturn(
+                Response.success(
+                    gitHubSearchResult
+                )
+            )
 
             whenever(gitHubSearchResult.items).thenReturn(null)
 
-            assertFailsWith(NoSuchElementException::class, "Repository list is null"){
+            assertFailsWith(NoSuchElementException::class, "Repository list is null") {
                 repository.search(searchParameters)
             }
         }
@@ -117,11 +125,19 @@ class GitHubSearchRepositoryTest {
     @Test
     fun `When all parameters are correct and service call results in error, an exception should be returned`() {
         runBlocking(Dispatchers.Unconfined) {
-            val responseBody = ResponseBody.create(MediaType.get("application/json; charset=utf-8"),"{\"message\":\"Not Found\",\"documentation_url\":\"https://developer.github.com/v3\"}")
+            val responseBody = ResponseBody.create(
+                MediaType.get("application/json; charset=utf-8"),
+                "{\"message\":\"Not Found\",\"documentation_url\":\"https://developer.github.com/v3\"}"
+            )
 
-            whenever(service.searchRepository(anyOfType())).thenReturn(Response.error(404,responseBody))
+            whenever(service.searchRepository(anyOfType())).thenReturn(
+                Response.error(
+                    404,
+                    responseBody
+                )
+            )
 
-            assertFailsWith(Throwable::class){
+            assertFailsWith(Throwable::class) {
                 repository.search(searchParameters)
             }
 

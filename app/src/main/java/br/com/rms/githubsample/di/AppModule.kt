@@ -3,9 +3,9 @@ package br.com.rms.githubsample.di
 import br.com.rms.githubsample.base.CoroutineContextProvider
 import br.com.rms.githubsample.data.mapper.RepositoryMapper
 import br.com.rms.githubsample.data.remote.ApiService
+import br.com.rms.githubsample.data.remote.createNetworkClient
 import br.com.rms.githubsample.data.repository.GitHubSearchRepository
 import br.com.rms.githubsample.data.repository.GitHubSearchRepositoryContract
-import br.com.rms.githubsample.data.remote.createNetworkClient
 import br.com.rms.githubsample.log.Logs
 import br.com.rms.githubsample.presentation.viewmodel.RepositoryListViewModel
 import br.com.rms.githubsample.usecases.SearchRepositoryUseCase

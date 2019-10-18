@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations.initMocks
-import java.lang.RuntimeException
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 

@@ -7,7 +7,6 @@ import br.com.rms.githubsample.R
 import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.ext.inflate
 import kotlinx.android.synthetic.main.adapter_repository_list_item.view.*
-import java.lang.IllegalArgumentException
 
 class RepositoryListAdapter :
     RecyclerView.Adapter<RepositoryListAdapter.BaseViewHolder>() {
@@ -32,7 +31,7 @@ class RepositoryListAdapter :
         }
     }
 
-     fun removeLoading() {
+    fun removeLoading() {
         itemList.map {
             if (it.second) {
                 val indexOf = itemList.indexOf(it)
