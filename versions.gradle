@@ -9,8 +9,7 @@ ext {
     androidx_navigation_version = "2.1.0"
     androidx_paging_version = "2.1.0"
 
-
-    ktor_version = "1.2.5"
+    coil_version = "0.7.0"
 
     gson_version = "2.8.6"
 

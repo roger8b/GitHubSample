@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.rms.githubsample.R
 import br.com.rms.githubsample.domain.Repository
 import br.com.rms.githubsample.ext.inflate
+import coil.api.load
 import kotlinx.android.synthetic.main.adapter_repository_list_item.view.*
 
 class RepositoryListAdapter :
@@ -41,14 +42,20 @@ class RepositoryListAdapter :
         }
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     private fun emptyRepository() = Pair(Repository(0, "", "", 0, 0, ""), true)
 
 
     fun addItems(list: List<Repository>) = apply {
+        val position = itemList.size + 1
+        val qtd = list.size
         list.map {
             itemList.add(Pair(it, false))
         }
-        notifyDataSetChanged()
+        notifyItemRangeInserted(position, qtd)
     }
 
     fun setListener(listener: (Repository.() -> Unit)) = apply {
@@ -82,6 +89,11 @@ class RepositoryListAdapter :
                 description.text = repository.description
                 pullRequestCounter.text = repository.forksCount.toString()
                 repositoryStarCounter.text = repository.stargazersCount.toString()
+
+                userImage.load(repository.avatarURL){
+                    crossfade(true)
+                    placeholder(R.drawable.github_logo)
+                }
 
                 if (listener != null) setOnClickListener { listener(repository) }
             }

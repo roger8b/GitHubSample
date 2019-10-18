@@ -89,6 +89,7 @@
             tools:text="9999" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/userImage"
             style="@style/Icons"
             android:layout_width="0dp"
             android:layout_height="@dimen/adapter_repository_list_item_icon"
