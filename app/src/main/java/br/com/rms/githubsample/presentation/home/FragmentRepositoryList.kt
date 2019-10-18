@@ -16,7 +16,7 @@ import br.com.rms.githubsample.presentation.viewmodel.RepositoryListViewModel
 import kotlinx.android.synthetic.main.fragment_repository_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
+class FragmentRepositoryList : BaseFragment() {
 
     private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
@@ -32,8 +32,6 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
     private val repositoryListAdapter: RepositoryListAdapter by lazy {
         RepositoryListAdapter()
     }
-
-    private var page: Int = 0
 
     override fun onCreateView(
 
@@ -85,8 +83,8 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
         logs.debug("UPDATE REPOSITORY LIST ADD NEW ${result.size} ITENS")
         repositoryListAdapter.run {
             addItems(result)
-            notifyDataSetChanged()
         }
+        scrollListener?.nexPage()
     }
 
     private fun showErrorMessage() {
@@ -94,7 +92,14 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
         dialog.setMessage(getString(R.string.alert_dialog_error_message))
             .setPositiveButton(getString(R.string.alert_dialog_error_button_yes)) { _, _ ->
 
-                listViewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+                scrollListener?.getCurrentPage()?.let {
+                    listViewModel.fetchRepositoryList(
+                        "language:kotlin",
+                        "stars",
+                        "desc",
+                        it
+                    )
+                }
 
             }
             .setNegativeButton(getString(R.string.alert_dialog_error_button_not)) { _, _ ->
@@ -109,7 +114,6 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
     private fun setupRecyclerView() {
         layoutManager = LinearLayoutManager(context)
-
         repositoryList.layoutManager = layoutManager
         repositoryList.adapter = repositoryListAdapter
         repositoryList.setHasFixedSize(true)
@@ -122,8 +126,6 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
 
-                this@FragmentRepositoryList.page = page
-
                 logs.debug("RECYCLER VIEW ON SCROLL LISTENER LOAD MORE: PAGE: $page TOTAL ITENS COUNT: $totalItemsCount ")
 
                 listViewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
@@ -132,13 +134,15 @@ class FragmentRepositoryList : BaseFragment<FragmentRepositoryList.Listener>() {
 
         repositoryList.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
 
-
-
         if (repositoryListAdapter.itemCount == 0) {
-            listViewModel.fetchRepositoryList("language:kotlin", "stars", "desc", page)
+            scrollListener?.getCurrentPage()?.let {
+                listViewModel.fetchRepositoryList(
+                    "language:kotlin",
+                    "stars",
+                    "desc",
+                    it
+                )
+            }
         }
     }
-
-
-    interface Listener
 }

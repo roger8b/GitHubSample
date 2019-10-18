@@ -9,9 +9,9 @@ abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutMana
     RecyclerView.OnScrollListener() {
 
     private var visibleThreshold = 10
-    private var currentPage = 0
+    private var currentPage = 1
     private var previousTotalItemCount = 1
-    private val startingPageIndex = 0
+    private val startingPageIndex = 2
     private var loading = true
 
     private var mLayoutManager: RecyclerView.LayoutManager = layoutManager
@@ -54,12 +54,18 @@ abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutMana
         }
 
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
-            currentPage++
+
             onLoadMore(currentPage, totalItemCount, view)
         }
     }
 
     abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView)
+
+    fun nexPage(){
+        currentPage++
+    }
+
+    fun getCurrentPage() = currentPage
 
     fun onLoading() {
         loading = true
