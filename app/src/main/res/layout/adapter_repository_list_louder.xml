@@ -13,6 +13,8 @@
 
         <ProgressBar
             style="@style/Icons"
+            android:id="@+id/listLouder"
+            android:contentDescription="@string/louder_description"
             android:layout_width="0dp"
             android:layout_height="@dimen/adapter_repository_list_item_icon"
             android:layout_marginStart="@dimen/margin_default"
