@@ -120,7 +120,9 @@ class FragmentRepositoryList : BaseFragment() {
 
         repositoryListAdapter
             .addItems(repositories)
-            .setListener { logs.debug("REPOSITORY ITEM HAS CLICKED") }
+            .setListener { logs.debug("####REPOSITORY ITEM HAS CLICKED#### " +
+                    "\n ID: ${this.id} " +
+                    "\n NAME: ${this.name}") }
 
         scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager!!) {
 
