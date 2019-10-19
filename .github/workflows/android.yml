@@ -25,6 +25,6 @@ jobs:
     - name: Archive Jacoco Test Report
         uses: actions/upload-artifact@v1
         with:
-          name: dist
+          name: code-coverage-report
           path: app/build/reports/jacoco/jacocoTestReport
 
