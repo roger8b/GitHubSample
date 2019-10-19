@@ -17,3 +17,14 @@ jobs:
       run: ./gradlew build
     - name: Jacoco test report
       run: ./gradlew jacocoTestReport
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: app/build/outputs/apk/debug/app-debug.apk
+    - name: Archive Jacoco Test Report
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: app/build/reports/jacoco/jacocoTestReport
+
