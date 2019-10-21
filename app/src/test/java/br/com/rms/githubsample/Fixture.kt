@@ -7,6 +7,7 @@ const val title: String = "name"
 const val description: String = "description"
 const val starCounter: Long = 9999
 const val avatarURL: String = "avatarURL"
+const val login: String = "login"
 
 const val query = "query"
 const val sort = "sort"
@@ -25,7 +26,8 @@ val validRepository = Repository(
     description,
     forksCount,
     starCounter,
-    avatarURL
+    avatarURL,
+    login
 )
 
 val validRepositoryList = listOf(validRepository)

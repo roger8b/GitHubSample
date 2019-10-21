@@ -19,11 +19,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_default"
             android:layout_marginTop="@dimen/margin_default"
-            android:layout_marginBottom="@dimen/margin_default"
-            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintBottom_toTopOf="@id/userLogin"
             app:layout_constraintEnd_toEndOf="@id/imageGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor." />
+
+        <TextView
+            android:id="@+id/userLogin"
+            style="@style/TextSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintEnd_toEndOf="@id/imageGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
             tools:text="Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor." />
 
         <TextView
@@ -36,7 +47,7 @@
             app:layout_constraintBottom_toTopOf="@id/pullRequestIcon"
             app:layout_constraintEnd_toEndOf="@id/imageGuideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/userLogin"
             tools:text="Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Delegadis gente finis, bibendum egestas augue arcu ut est" />
 
         <androidx.appcompat.widget.AppCompatImageView

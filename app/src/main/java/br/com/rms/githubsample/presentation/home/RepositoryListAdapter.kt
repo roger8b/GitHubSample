@@ -46,7 +46,7 @@ class RepositoryListAdapter :
         return position.toLong()
     }
 
-    private fun emptyRepository() = Pair(Repository(0, "", "", 0, 0, ""), true)
+    private fun emptyRepository() = Pair(Repository(0, "", "", 0, 0, "", ""), true)
 
 
     fun addItems(list: List<Repository>) = apply {
@@ -89,6 +89,7 @@ class RepositoryListAdapter :
                 description.text = repository.description
                 pullRequestCounter.text = repository.forksCount.toString()
                 repositoryStarCounter.text = repository.stargazersCount.toString()
+                userLogin.text = context.getString(R.string.repository_list_item_autor_prefix,repository.login)
 
                 userImage.load(repository.avatarURL){
                     crossfade(true)

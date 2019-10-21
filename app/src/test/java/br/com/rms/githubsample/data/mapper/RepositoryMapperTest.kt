@@ -33,6 +33,7 @@ class RepositoryMapperTest {
         whenever(gitHubRepository.stargazersCount).thenReturn(stargazersCount)
         whenever(gitHubRepository.owner).thenReturn(owner)
         whenever(gitHubRepository.owner?.avatarURL).thenReturn(avatarURL)
+        whenever(gitHubRepository.owner?.login).thenReturn(login)
     }
 
     @Test
@@ -46,6 +47,7 @@ class RepositoryMapperTest {
         assertEquals(forksCount, mapperResponse.forksCount)
         assertEquals(stargazersCount, mapperResponse.stargazersCount)
         assertEquals(avatarURL, mapperResponse.avatarURL)
+        assertEquals(login, mapperResponse.login)
     }
 
     @Test
@@ -133,6 +135,24 @@ class RepositoryMapperTest {
         whenever(gitHubRepository.owner?.avatarURL).thenReturn("")
 
         assertFailsWith(Throwable::class, "Error repository Avatar URL is Empty") {
+            mapper.map(gitHubRepository)
+        }
+    }
+
+    @Test
+    fun `When the login is null, the should return an exception`() {
+        whenever(gitHubRepository.owner?.login).thenReturn(null)
+
+        assertFailsWith(Throwable::class, "Error repository Login is null") {
+            mapper.map(gitHubRepository)
+        }
+    }
+
+    @Test
+    fun `When the login is empty, the should return an exception`() {
+        whenever(gitHubRepository.owner?.login).thenReturn("")
+
+        assertFailsWith(Throwable::class, "Error repository Login is Empty") {
             mapper.map(gitHubRepository)
         }
     }

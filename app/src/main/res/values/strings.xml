@@ -4,4 +4,6 @@
     <string name="alert_dialog_error_button_yes">Sim</string>
     <string name="alert_dialog_error_button_not">Não</string>
     <string name="louder_description">Animação Carregando novos itens</string>
+
+    <string name="repository_list_item_autor_prefix">Autor: %s</string>
 </resources>

@@ -28,7 +28,11 @@ class RepositoryMapper : BaseMapper<GitHubRepository, Repository>() {
         if (element.owner.avatarURL.isEmpty()) throw Throwable("Error repository Avatar URL is Empty")
         val avatarURL = element.owner.avatarURL
 
-        return Repository(id, name, description, forksCount, stargazersCount, avatarURL)
+        if(element.owner.login == null)  throw Throwable("Error repository Owner Login is null")
+        if (element.owner.login.isEmpty()) throw Throwable("Error repository Login is Empty")
+        val login = element.owner.login
+
+        return Repository(id, name, description, forksCount, stargazersCount, avatarURL,login)
     }
 
 }
