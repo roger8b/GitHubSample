@@ -18,8 +18,8 @@
 - A camada de apresentação foi utilizado MVVM.
 - Para as camadas de dados foi utilizado as camadas
 	- UseCases : Classes com as açoes que o usuário pode executar
-	- Domain : Abriga classe de modelo do negócio.
-	- Data: Abriga o repository e classe de modelo do serviço.
+	- Domain : Classe de modelo do negócio.
+	- Data: Classes de modelo do serviço e classes responsáveis por solicitar as informações ao serviço.
 
 **Principais Bibliotecas:**
 
