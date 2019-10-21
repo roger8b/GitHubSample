@@ -1,5 +1,7 @@
 ## GitHub Sample
 
+![](https://github.com/roger8b/GitHubSample/workflows/Android%20CI/badge.svg)
+
  Objetivo deste projeto é demonstrar a utilização de algumas ferramentas de construção de aplicativos para plataforma android.
 
 ### Características do projeto:
@@ -30,9 +32,14 @@
 - Para gerar um relatorio de cobertura de testes executar o seguinte comando
 ``` ./gradlew jacocoTestReport ```
 
-### Mapa Mental do App
+### Imagens do App
 
-![Mapa Mental](https://github.com/roger8b/GitHubSample/blob/develop/map_v1.png)
+| Home Louder | Home Lista |
+|-------------|------------|
+|![Home Louder](https://github.com/roger8b/GitHubSample/blob/develop/readme_assets/home_louder.png)|![Home List](https://github.com/roger8b/GitHubSample/blob/develop/readme_assets/home_list.png)|
+
+### Mapa Mental do App
+![Mapa Mental](https://github.com/roger8b/GitHubSample/blob/develop/readme_assets/map_v1.png)
 
  
 
