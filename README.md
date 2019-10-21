@@ -16,7 +16,10 @@
 **Arquiterura:** 
 
 - A camada de apresentação foi utilizado MVVM.
-	 Para as camadas de dados foi utilizado as camadas de UseCases, Domain, Data 	do Clean Architecture.
+- Para as camadas de dados foi utilizado as camadas
+	- UseCases : Classes com as açoes que o usuário pode executar
+	- Domain : Abriga classe de modelo do negócio.
+	- Data: Abriga o repository e classe de modelo do serviço.
 
 **Principais Bibliotecas:**
 
